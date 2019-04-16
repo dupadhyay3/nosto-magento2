@@ -96,6 +96,7 @@ class Builder
     public function build(Order $order)
     {
         $nostoOrder = new NostoOrder();
+        $this->logger->info('Order kicking in');
         try {
             $nostoOrder->setOrderNumber(self::ORDER_NUMBER_PREFIX . $order->getId());
             $nostoOrder->setExternalOrderRef($order->getRealOrderId());
