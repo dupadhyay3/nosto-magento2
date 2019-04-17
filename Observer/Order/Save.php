@@ -125,6 +125,8 @@ class Save implements ObserverInterface
                 $this->nostoHelperData->getModuleVersion()
             );
 
+            $event = $observer->getEvent();
+
             /* @var Order $order */
             /** @noinspection PhpUndefinedMethodInspection */
             $order = $observer->getOrder();
@@ -134,6 +136,7 @@ class Save implements ObserverInterface
                 $store
             );
             if ($nostoAccount !== null) {
+                $this->logger->info('NostoAccount is not null');
                 $quoteId = $order->getQuoteId();
                 /** @var NostoCustomer $nostoCustomer */
                 $nostoCustomer = $this->customerRepository
@@ -142,6 +145,7 @@ class Save implements ObserverInterface
                     return;
                 }
                 $orderService = new OrderConfirm($nostoAccount, $this->nostoHelperUrl->getActiveDomain($store));
+                $this->logger->info('Built OrderConfirm');
                 try {
                     $this->logger->info('Nosto Customer'. $nostoCustomer->getNostoId());
                     $orderService->send($nostoOrder, $nostoCustomer->getNostoId());
@@ -159,6 +163,7 @@ class Save implements ObserverInterface
                 $this->handleInventoryLevelUpdate($nostoOrder);
             }
         }
+        $this->logger->info('Nosto Order DONE!');
     }
 
     /**
