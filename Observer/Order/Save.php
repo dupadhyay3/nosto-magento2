@@ -117,6 +117,7 @@ class Save implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
+        $this->logger->info('Order observer kicked in');
         if ($this->moduleManager->isEnabled(NostoHelperData::MODULE_NAME)) {
             HttpRequest::buildUserAgent(
                 'Magento',
