@@ -142,6 +142,7 @@ class Save implements ObserverInterface
                 $nostoCustomer = $this->customerRepository
                     ->getOneByQuoteId($quoteId);
                 if ($nostoCustomer instanceof NostoCustomer === false) {
+                    $this->logger->info('$nostoCustomer is not instanceOf NostoCustomer');
                     return;
                 }
                 $orderService = new OrderConfirm($nostoAccount, $this->nostoHelperUrl->getActiveDomain($store));
