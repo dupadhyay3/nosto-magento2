@@ -142,6 +142,7 @@ class Save implements ObserverInterface
                 }
                 $orderService = new OrderConfirm($nostoAccount, $this->nostoHelperUrl->getActiveDomain($store));
                 try {
+                    $this->logger->info('Nosto Customer'. $nostoCustomer->getNostoId());
                     $orderService->send($nostoOrder, $nostoCustomer->getNostoId());
                 } catch (\Exception $e) {
                     $this->logger->error(
