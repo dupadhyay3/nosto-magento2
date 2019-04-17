@@ -99,6 +99,9 @@ class Builder
         $this->logger->info('Order kicking in');
         try {
             $nostoOrder->setOrderNumber(self::ORDER_NUMBER_PREFIX . $order->getId());
+
+            $this->logger->info('Order no: '. $nostoOrder->getOrderNumber());
+
             $nostoOrder->setExternalOrderRef($order->getRealOrderId());
             $orderCreated = $order->getCreatedAt();
             if (is_string($orderCreated)) {
@@ -109,6 +112,7 @@ class Builder
             }
             if ($order->getPayment() instanceof Payment) {
                 $nostoOrder->setPaymentProvider($order->getPayment()->getMethod());
+                $this->logger->info('Order payment method: '. $nostoOrder->getPaymentProvider());
             } else {
                 throw new NostoException('Order has no payment associated');
             }
@@ -164,12 +168,13 @@ class Builder
                 );
                 $nostoOrder->addPurchasedItems($nostoItem);
             }
+            $this->logger->info('Order is ready');
         } catch (Exception $e) {
             $this->logger->exception($e);
         }
 
         $this->eventManager->dispatch('nosto_order_load_after', ['order' => $nostoOrder, 'magentoOrder' => $order]);
-
+        $this->logger->info('Event dispatched!');
         return $nostoOrder;
     }
 
