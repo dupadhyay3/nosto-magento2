@@ -40,6 +40,7 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\ScopeInterface;
 use Nosto\Request\Api\Token;
 use Nosto\Tagging\Helper\Account;
+use Nosto\Tagging\Test\_util\ProductBuilder;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
 use Magento\TestFramework\Helper\Bootstrap;
 use Nosto\Tagging\Helper\Data as NostoHelperData;
@@ -50,8 +51,6 @@ use Nosto\Tagging\Helper\Data as NostoHelperData;
 */
 abstract class TestCase extends PhpUnitTestCase
 {
-    use FixturesTrait;
-
     const DEFAULT_NOSTO_ACCOUNT = 'test-account';
 
     private $initialized = false;
@@ -202,5 +201,13 @@ abstract class TestCase extends PhpUnitTestCase
             NostoHelperData::XML_PATH_VARIATION_TAGGING,
             '1'
         );
+    }
+
+    /**
+     * @return ProductBuilder
+     */
+    protected function getProductBuilder()
+    {
+        return new ProductBuilder($this->getObjectManager());
     }
 }

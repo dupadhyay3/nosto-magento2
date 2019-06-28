@@ -32,20 +32,20 @@ trait FixturesTrait
     /**
      * Loads a fixture for simple product
      */
-    public static function fixtureLoadSimpleProduct()
+    public static function buildSimpleProduct()
     {
         $product = self::createSimpleProduct(123, 10, '5.99');
         $categoryIds = [16];
         self::assignCategories($product, $categoryIds);
         self::assignRatingAndReview($product);
-//        self::setTierPrice($product);
+        self::setTierPrice($product);
         return $product;
     }
 
     /**
      * Loads a fixture for configurable product
      */
-    public static function fixtureLoadConfigurableProduct()
+    public static function buildConfigurableProduct()
     {
         $product = self::createConfigurableProduct();
         $categoryIds = [16];
